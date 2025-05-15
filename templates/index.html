@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление Заданий</title>
+</head>
+<body>
+    <h1>Добавить Задание</h1>
+    <form action="/add_task" method="post">
+        <label for="subject">Предмет:</label>
+        <input type="text" id="subject" name="subject" required><br>
+        <label for="question">Вопрос:</label>
+        <input type="text" id="question" name="question" required><br>
+        <label for="answer">Ответ:</label>
+        <input type="text" id="answer" name="answer" required><br>
+        <button type="submit">Добавить Задание</button>
+    </form>
+
+    <h2>Список Заданий</h2>
+    <ul>
+        {% for subject, tasks in tasks.items() %}
+            <li>{{ subject }}:
+                <ul>
+                    {% for task in tasks %}
+                        <li>
+                            {{ task.question }} - {{ task.answer }}
+                            <form action="/delete_task" method="post" style="display: inline;">
+                                <input type="hidden" name="subject" value="{{ subject }}">
+                                <input type="hidden" name="task_index" value="{{ task.index }}">
+                                <button type="submit">Удалить</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
